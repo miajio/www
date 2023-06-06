@@ -21,6 +21,7 @@ func main() {
 
 	e.Static("/static/images", "./static/images")
 	e.Static("/static/js", "./static/js")
+	e.Static("/static/css", "./static/css")
 
 	bin.GinUtil.LoadHTMLFolders(e, []string{"./static"}, ".html")
 	bin.GinUtil.LoadRouters(e, GinRouters...)
