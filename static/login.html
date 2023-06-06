@@ -1,0 +1,61 @@
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url("/static/images/ai-bj.jpg");
+    }
+    .container {
+      width: 300px;
+      margin: 400px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      background: white;
+    }
+    .container h1 {
+      text-align: center;
+      font-size: 24px;
+    }
+    .container input {
+      width: 100%;
+      height: 30px;
+      margin-bottom: 10px;
+      padding-left: 10px;
+      border: 1px solid #ccc;
+    }
+    .container input:focus {
+      outline: none;
+    }
+    .container button {
+      width: 100%;
+      height: 30px;
+      border: none;
+      background: #333;
+      color: white;
+      cursor: pointer;
+    }
+    .container button:hover {
+      background: #444;
+    }
+    .container button:focus {
+      outline: none;
+    }
+
+    .container a {
+      color: black;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+<h1>登录</h1>
+<form action="/user/login" method="post">
+<input type="text" placeholder="用户名" name="username" required>
+<input type="password" placeholder="密码" name="password" required>
+<button type="submit">登录</button>
+<a href="#">注册</a>
+</form>
+</div>
+</body>
+</html>
