@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>miajio-米亚西奥</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css" />
+    <script src="/static/js/marked.min.js"></script>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><img alt="logo" src="/static/images/miajio.png"></img></li>
+            <li><a href="/index.html">主页</a></li>
+            <li><a href="/about.html">关于</a></li>
+            <li><a href="#contact">联系我们</a></li>
+        </ul>
+    </nav>
+
+    <main id="content">
+        
+    </main>
+
+    <footer>
+        <p>备案信息</p>
+    </footer>
+
+    <script>
+        // marked.parse
+        fetch("/static/mk/about.md").then(function(response) {
+            return response.text();
+        }).then(function(markdownText) {
+            var msg = marked.parse(markdownText);
+            document.getElementById("content").innerHTML = msg;
+        });
+    </script>
+</body>
+</html>

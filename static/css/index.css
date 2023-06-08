@@ -1,0 +1,40 @@
+nav ul {
+    list-style: none;
+    margin-top: 30px;
+    margin: 10px 30px 0px 30px;
+    padding: 10px;
+    background-color:midnightblue
+}
+
+nav li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+nav ul li img {
+    width: 30px;
+    height: 30px;
+}
+
+nav ul li a {
+    color:aliceblue;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    color:burlywood;
+}
+
+main {
+    margin: 0px 30px 0px 30px;
+}
+
+main p a {
+    color:black;
+    text-decoration: none;
+}
+
+footer {
+    text-align: center;
+}

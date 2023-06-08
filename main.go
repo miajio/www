@@ -21,16 +21,14 @@ func main() {
 
 	e.Static("/static/images", "./static/images")
 	e.Static("/static/js", "./static/js")
+	e.Static("/static/mk", "./static/mk")
 	e.Static("/static/css", "./static/css")
 
 	bin.GinUtil.LoadHTMLFolders(e, []string{"./static"}, ".html")
 	bin.GinUtil.LoadRouters(e, GinRouters...)
 
 	e.GET("/", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 200,
-			"msg":  "success",
-		})
+		ctx.HTML(http.StatusOK, "index.html", nil)
 	})
 
 	e.GET("/:page", func(ctx *gin.Context) {
@@ -45,5 +43,5 @@ func main() {
 		})
 	})
 
-	e.Run(":8080")
+	e.Run(":8088")
 }
