@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>miajio-米亚西奥</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css" />
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><img alt="logo" src="/static/images/miajio.png"></img></li>
+            <li><a href="/index.html">主页</a></li>
+            <li><a href="/about.html">关于</a></li>
+            <li><a href="/leave-msg.html">联系我们</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-box">
+        <h1>联系方式采用留言模式,您的留言信息将存储到平台之中</h1>
+        <form action="/msg/leave" method="post">
+            <input type="text" placeholder="手机号" name="mobile" required>
+            <input type="text" placeholder="姓名" name="name" required>
+            <textarea placeholder="留言" name="msg" required></textarea>
+            <button type="submit">提交</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>备案信息</p>
+    </footer>
+</body>
+</html>

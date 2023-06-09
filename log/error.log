@@ -1,0 +1,2 @@
+[2023-06-09 12:54:44]	error	C:/Users/SnaroChrisXiao/go/src/www/main.go:51	数据库连接失败: Error 1045 (28000): Access denied for user 'roow'@'36.148.60.251' (using password: YES)
+[2023-06-09 12:56:19]	error	C:/Users/SnaroChrisXiao/go/src/www/main.go:51	数据库连接失败: Error 1045 (28000): Access denied for user 'roow'@'36.148.60.251' (using password: YES)

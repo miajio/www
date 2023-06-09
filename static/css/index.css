@@ -35,6 +35,48 @@ main p a {
     text-decoration: none;
 }
 
+.main-box {
+    margin: 0px 30px 0px 30px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background: white;
+}
+
+.main-box input {
+    width: 90%;
+    height: 30px;
+    margin: 0px 0px 10px 10px;
+    border: 1px solid #ccc;
+}
+
+.main-box input:focus {
+    outline: none;
+}
+
+.main-box textarea {
+    width: 90%;
+    margin: 0px 0px 10px 10px;
+    border: 1px solid #ccc;
+}
+
+.main-box button {
+    width: 90%;
+    margin: 0px 0px 10px 10px;
+    height: 30px;
+    border: none;
+    background: #333;
+    color: white;
+    cursor: pointer;
+}
+
+.main-box button:hover {
+    background: #444;
+}
+
+.main-box button:focus {
+    outline: none;
+}
+
 footer {
     text-align: center;
 }
