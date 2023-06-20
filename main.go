@@ -90,7 +90,7 @@ func main() {
 	e := gin.Default()
 
 	e.Static("/static/images", "./static/images")
-	e.Static("/static/images/head", "./static/images/head")
+	// e.Static("/static/images/head", "./static/images/head")
 
 	e.Static("/static/js", "./static/js")
 	e.Static("/static/css", "./static/css")
