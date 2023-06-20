@@ -12,3 +12,6 @@ mysql
 minio
 
 redis
+
+# about
+go http://www.miajio.com/leave-msg.html
