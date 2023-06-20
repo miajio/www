@@ -18,10 +18,10 @@ var UserRouter userRouter = (*userRouterImpl)(nil)
 func (*userRouterImpl) Running(e *gin.Engine) {
 	userGroup := e.Group("/user")
 	userGroup.POST("/login", func(ctx *gin.Context) {
-		username := ctx.DefaultPostForm("username", "")
+		email := ctx.DefaultPostForm("email", "")
 		password := ctx.DefaultPostForm("password", "")
-		if username == "" {
-			ctx.JSON(http.StatusOK, gin.H{"code": 400, "msg": "用户名不能为空", "error": "用户名不能为空"})
+		if email == "" {
+			ctx.JSON(http.StatusOK, gin.H{"code": 400, "msg": "邮箱不能为空", "error": "用户名不能为空"})
 			return
 		}
 		if password == "" {
@@ -29,20 +29,22 @@ func (*userRouterImpl) Running(e *gin.Engine) {
 			return
 		}
 
-		searchSQL := "SELECT `uid` FROM `r9_user_info` WHERE `account` = ? and `password` = MD5(?) and `effective_time` > NOW()"
+		searchSQL := "SELECT `uid`, `username`, `head_pic` FROM `user_info` WHERE `email` = ? and `password` = MD5(?) and status = 1"
 
-		uid := ""
+		type obj struct {
+			Uid      string `db:"uid" json:"uid"`
+			UserName string `db:"username" json:"username"`
+			HeadPic  string `db:"head_pic" json:"headPic"`
+		}
 
-		if err := lib.DB.Get(&uid, searchSQL, username, password); err != nil {
-			if username == "miajio" && password == "123456" {
-				ctx.JSON(http.StatusOK, gin.H{"code": 200, "msg": "登录成功"})
-				return
-			}
-			ctx.JSON(http.StatusOK, gin.H{"code": 400, "msg": "登录失败,请联系管理员", "error": "登录失败,请联系管理员"})
+		var result obj
+
+		if err := lib.DB.Get(&result, searchSQL, email, password); err != nil {
+			ctx.JSON(http.StatusOK, gin.H{"code": 400, "msg": "用户名或密码错误", "error": err})
 			return
 		}
 
-		ctx.JSON(http.StatusOK, gin.H{"code": 200, "msg": "登录成功", "data": uid})
+		ctx.JSON(http.StatusOK, gin.H{"code": 200, "msg": "登录成功", "data": result})
 		// ctx.HTML(http.StatusOK, "r9.html", gin.H{"uid": uid})
 	})
 

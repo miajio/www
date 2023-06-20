@@ -90,10 +90,13 @@ func main() {
 	e := gin.Default()
 
 	e.Static("/static/images", "./static/images")
+	e.Static("/static/images/head", "./static/images/head")
+
 	e.Static("/static/js", "./static/js")
-	e.Static("/static/mk", "./static/mk")
 	e.Static("/static/css", "./static/css")
-	e.Static("/static/json", "./static/json")
+
+	e.Static("/static/bootstrap/js", "./static/bootstrap/js")
+	e.Static("/static/bootstrap/css", "./static/bootstrap/css")
 
 	bin.GinUtil.LoadHTMLFolders(e, []string{"./static"}, ".html")
 	bin.GinUtil.LoadRouters(e, GinRouters...)
@@ -119,5 +122,5 @@ func main() {
 	})
 
 	e.Use(bin.Limit(64))
-	e.Run(":80")
+	e.Run(":81")
 }

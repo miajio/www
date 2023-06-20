@@ -1,38 +1,172 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
+
 <head>
-    <title>miajio-米亚西奥</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/index.css" />
-    <script src="/static/js/marked.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css" />
+    <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/jquery/jquery-3.6.4.min.js"></script>
+    <script src="/static/js/index.js"></script>
+    <title>米亚西奥-首页(miajio)</title>
 </head>
-<body>
-    <nav>
-        <ul>
-            <li><img alt="logo" src="/static/images/miajio.png"></img></li>
-            <li><a href="/index.html">主页</a></li>
-            <li><a href="/tools.html">工具</a></li>
-            <li><a href="/about.html">关于</a></li>
-        </ul>
-    </nav>
 
-    <main id="content">
-        
-    </main>
-    <footer>
-        <p style="background:none;height: 5%;position: fixed;bottom: 0px;width: 100%;text-align: center;
-"><img style="padding-top:2px;" src="/static/images/gh.png"><a class="banquan" style="color:#000;"
-        href="https://beian.miit.gov.cn/"
-        target="_blank">湘ICP备2023014409号-1</a></p>
-    </footer>
+<body style="width: 98%;">
+    <div class="container">
+        <header
+            class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+            <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+                Logo
+            </a>
 
-    <script>
-        // marked.parse
-        fetch("/static/mk/index.md").then(function(response) {
-            return response.text();
-        }).then(function(markdownText) {
-            var msg = marked.parse(markdownText);
-            document.getElementById("content").innerHTML = msg;
-        });
-    </script>
+            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="#" class="nav-link px-2 link-dark">首页</a></li>
+                <li><a href="#" class="nav-link px-2 link-dark">特色</a></li>
+                <li><a href="#" class="nav-link px-2 link-dark">工具</a></li>
+                <li><a href="#" class="nav-link px-2 link-dark">问题</a></li>
+                <li><a href="#" class="nav-link px-2 link-dark">关于</a></li>
+                <li><a href="#" class="nav-link px-2 link-dark">联系</a></li>
+            </ul>
+
+            <div class="col-md-3 text-end">
+                <div id="menu_button_group">
+                    <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal"
+                        data-bs-target="#SignIn">登录</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#SignUp">注册</button>
+                </div>
+                <div id="login_user_group" style="display: none;">
+                    <img style="width:50px;height:50px;" class="img-circle thumbnail" src="/static/images/miajio_photo.jpg"
+                        alt="miajio" />
+                    <button type="button" class="btn" id="login_user_name">user_name</button>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 offset-md-2">
+            <!-- 左侧新闻列表 Start -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h4 class="card-title">Miajio(米亚西奥)网上线<span class="badge bg-danger">New</span></h4>
+                    <p class="card-text">热烈庆祝miajio网正式上线</p>
+                    <div class="d-flex justify-content-end align-items-center">
+                        <h6 class="card-subtitle mb-2 text-muted me-2">miajio.com</h6>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <a href="#" class="card-link">点赞</a>
+                            <a href="#" class="card-link">评论</a>
+                        </div>
+                        <p class="card-text"><small class="text-muted">2023-6-20 23:50:50</small></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h4 class="card-title">Miajio(米亚西奥)网上线<span class="badge bg-danger">New</span></h4>
+                    <p class="card-text">热烈庆祝miajio网正式上线</p>
+                    <div class="d-flex justify-content-end align-items-center">
+                        <h6 class="card-subtitle mb-2 text-muted me-2">miajio.com</h6>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <a href="#" class="card-link">点赞</a>
+                            <a href="#" class="card-link">评论</a>
+                        </div>
+                        <p class="card-text"><small class="text-muted">2023-6-20 23:50:50</small></p>
+                    </div>
+                </div>
+            </div>
+            <!-- 左侧新闻列表 End -->
+        </div>
+        <div class="col-md-2">
+            <div class="row">
+                <h4>杰出贡献者</h4>
+                <!-- 右侧杰出贡献者列表 Start -->
+                <div class="col-md-6">
+                    <a class="btn" href="https://github.com/miajio">
+                        <img style="width:50px;height:50px;" class="img-circle thumbnail" src="/static/images/miajio_photo.jpg"
+                            alt="miajio" />
+                        miajio</a>
+                </div>
+                <!-- 右侧杰出贡献者列表 End -->
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="SignIn">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div id="sign_in_error"></div>
+                    <h4 class="modal-title">登录</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-3 mt-3">
+                        <input type="email" class="form-control" id="sign_in_email" placeholder="请输入邮箱"
+                            name="sign_in_email">
+                        <label for="sign_in_email">邮箱</label>
+                    </div>
+                    <div class="form-floating mb-3 mt-3">
+                        <input type="password" class="form-control" id="sign_in_password" placeholder="请输入密码"
+                            name="sign_in_password">
+                        <label for="sign_in_password">密码</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" id="sign_in_button">登录</button>
+                    <button type="button" class="btn btn-outline-dark" id="sign_in_cancel"
+                        data-bs-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="SignUp">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div id="sign_up_error"></div>
+                    <h4 class="modal-title">注册</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-3 mt-3">
+                        <input type="email" class="form-control" id="sign_up_user_name" placeholder="请输入用户名"
+                            name="sign_up_user_name">
+                        <label for="sign_up_user_name">用户名</label>
+                    </div>
+                    <div class="form-floating mb-3 mt-3">
+                        <input type="email" class="form-control" id="sign_up_email" placeholder="请输入邮箱"
+                            name="sign_up_email">
+                        <label for="sign_up_email">邮箱</label>
+                    </div>
+                    <div class="form-floating mb-3 mt-3">
+                        <input type="email" class="form-control" id="sign_up_check_code" placeholder="请输入验证码"
+                            name="sign_up_check_code">
+                        <label for="sign_up_check_code">邮箱验证码</label>
+                    </div>
+                    <div class="form-floating mb-3 mt-3">
+                        <input type="password" class="form-control" id="sign_up_password" placeholder="请输入密码"
+                            name="sign_up_password">
+                        <label for="sign_up_password">密码</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" id="sign_up_button">注册</button>
+                    <button type="button" class="btn btn-outline-dark" id="sign_up_cancel"
+                        data-bs-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
 </body>
+
 </html>
