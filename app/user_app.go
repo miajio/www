@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/miajio/www/bin"
+	"github.com/miajio/www/lib"
 )
 
 type userRouterImpl struct{}
@@ -28,11 +29,21 @@ func (*userRouterImpl) Running(e *gin.Engine) {
 			return
 		}
 
-		if username == "miajio" && password == "123456" {
-			ctx.JSON(http.StatusOK, gin.H{"code": 200, "msg": "登录成功"})
+		searchSQL := "SELECT `uid` FROM `r9_user_info` WHERE `account` = ? and `password` = MD5(?) and `effective_time` > NOW()"
+
+		uid := ""
+
+		if err := lib.DB.Get(&uid, searchSQL, username, password); err != nil {
+			if username == "miajio" && password == "123456" {
+				ctx.JSON(http.StatusOK, gin.H{"code": 200, "msg": "登录成功"})
+				return
+			}
+			ctx.JSON(http.StatusOK, gin.H{"code": 400, "msg": "登录失败,请联系管理员", "error": "登录失败,请联系管理员"})
 			return
 		}
-		ctx.JSON(http.StatusOK, gin.H{"code": 400, "msg": "登录失败,用户名或密码错误", "error": "登录失败,用户名或密码错误"})
-		return
+
+		ctx.JSON(http.StatusOK, gin.H{"code": 200, "msg": "登录成功", "data": uid})
+		// ctx.HTML(http.StatusOK, "r9.html", gin.H{"uid": uid})
 	})
+
 }

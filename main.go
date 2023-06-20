@@ -8,11 +8,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
-	"github.com/miacio/varietas/log"
-	"github.com/miacio/varietas/web"
 	"github.com/miajio/www/app"
 	"github.com/miajio/www/bin"
 	"github.com/miajio/www/lib"
+	"github.com/miajio/www/log"
 	"github.com/spf13/viper"
 )
 
@@ -94,6 +93,7 @@ func main() {
 	e.Static("/static/js", "./static/js")
 	e.Static("/static/mk", "./static/mk")
 	e.Static("/static/css", "./static/css")
+	e.Static("/static/json", "./static/json")
 
 	bin.GinUtil.LoadHTMLFolders(e, []string{"./static"}, ".html")
 	bin.GinUtil.LoadRouters(e, GinRouters...)
@@ -118,6 +118,6 @@ func main() {
 		})
 	})
 
-	e.Use(web.Limit(64))
-	e.Run(":8088")
+	e.Use(bin.Limit(64))
+	e.Run(":80")
 }

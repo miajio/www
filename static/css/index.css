@@ -54,6 +54,7 @@ main p a {
 }
 
 .main-box textarea {
+    height: 500px;
     width: 90%;
     margin: 0px 0px 10px 10px;
     border: 1px solid #ccc;

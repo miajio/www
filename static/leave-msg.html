@@ -9,6 +9,7 @@
         <ul>
             <li><img alt="logo" src="/static/images/miajio.png"></img></li>
             <li><a href="/index.html">主页</a></li>
+            <li><a href="/tools.html">工具</a></li>
             <li><a href="/about.html">关于</a></li>
             <li><a href="/leave-msg.html">联系我们</a></li>
         </ul>
@@ -19,13 +20,16 @@
         <form action="/msg/leave" method="post">
             <input type="text" placeholder="手机号" name="mobile" required>
             <input type="text" placeholder="姓名" name="name" required>
-            <textarea placeholder="留言" name="msg" required></textarea>
+            <textarea maxlength="500" placeholder="留言" name="msg" required></textarea>
             <button type="submit">提交</button>
         </form>
     </div>
 
     <footer>
-        <p>备案信息</p>
+        <p style="background:none;height: 5%;position: fixed;bottom: 0px;width: 100%;text-align: center;
+"><img style="padding-top:2px;" src="/static/images/gh.png"><a class="banquan" style="color:#000;"
+        href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=2023014409"
+        target="_blank">湘ICP备2023014409号-1</a></p>
     </footer>
 </body>
 </html>
