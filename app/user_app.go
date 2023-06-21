@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/miajio/www/bin"
-	"github.com/miajio/www/lib"
+	"github.com/miajio/www/store"
 )
 
 type userRouterImpl struct{}
@@ -29,21 +29,11 @@ func (*userRouterImpl) Running(e *gin.Engine) {
 			return
 		}
 
-		searchSQL := "SELECT `uid`, `username`, `head_pic` FROM `user_info` WHERE `email` = ? and `password` = MD5(?) and status = 1"
-
-		type obj struct {
-			Uid      string `db:"uid" json:"uid"`
-			UserName string `db:"username" json:"username"`
-			HeadPic  string `db:"head_pic" json:"headPic"`
-		}
-
-		var result obj
-
-		if err := lib.DB.Get(&result, searchSQL, email, password); err != nil {
+		result, err := store.UserInfoStore.Login(email, password)
+		if err != nil {
 			ctx.JSON(http.StatusOK, gin.H{"code": 400, "msg": "用户名或密码错误", "error": err})
 			return
 		}
-
 		ctx.JSON(http.StatusOK, gin.H{"code": 200, "msg": "登录成功", "data": result})
 		// ctx.HTML(http.StatusOK, "r9.html", gin.H{"uid": uid})
 	})

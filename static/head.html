@@ -1,0 +1,133 @@
+<script src="/static/js/head.js"></script>
+
+<div class="container">
+    <header
+        class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            Logo
+        </a>
+
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="/index.html" class="nav-link px-2 link-dark">首页</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">特色</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">工具</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">问题</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">关于</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">联系</a></li>
+        </ul>
+
+        <div class="col-md-3 text-end">
+            <div id="menu_button_group">
+                <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal"
+                    data-bs-target="#SignIn">登录</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#SignUp">注册</button>
+            </div>
+            <div id="login_user_group" style="display: none;">
+                <img style="width:50px;height:50px;" class="img-circle thumbnail" src="/static/images/miajio_photo.jpg"
+                    alt="miajio" />
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#SignOut"
+                    id="login_user_name">user_name</button>
+            </div>
+        </div>
+    </header>
+</div>
+
+<div class="modal fade" id="SignOut">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div id="sign_out_error"></div>
+                <h4 class="modal-title">用户信息</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-floating mb-3 mt-3">
+                    <input type="text" class="form-control" id="sign_out_username" placeholder="请输入用户名"
+                        name="sign_out_username">
+                    <label for="sign_out_username">用户名</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-info" id="sign_out_save_button">保存</button>
+                <button type="button" class="btn btn-outline-danger" id="sign_out_button">退出登录</button>
+                <button type="button" class="btn btn-outline-dark" id="sign_out_cancel"
+                    data-bs-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="SignIn">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div id="sign_in_error"></div>
+                <h4 class="modal-title">登录</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-floating mb-3 mt-3">
+                    <input type="email" class="form-control" id="sign_in_email" placeholder="请输入邮箱"
+                        name="sign_in_email">
+                    <label for="sign_in_email">邮箱</label>
+                </div>
+                <div class="form-floating mb-3 mt-3">
+                    <input type="password" class="form-control" id="sign_in_password" placeholder="请输入密码"
+                        name="sign_in_password">
+                    <label for="sign_in_password">密码</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" id="sign_in_button">登录</button>
+                <button type="button" class="btn btn-outline-dark" id="sign_in_cancel"
+                    data-bs-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="SignUp">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div id="sign_up_error"></div>
+                <h4 class="modal-title">注册</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-floating mb-3 mt-3">
+                    <input type="text" class="form-control" id="sign_up_user_name" placeholder="请输入用户名"
+                        name="sign_up_user_name">
+                    <label for="sign_up_user_name">用户名</label>
+                </div>
+                <div class="form-floating mb-3 mt-3">
+                    <input type="email" class="form-control" id="sign_up_email" placeholder="请输入邮箱"
+                        name="sign_up_email">
+                    <label for="sign_up_email">邮箱</label>
+                    <button type="button" class="btn btn-outline-primary mt-3" id="send_email_button">获取验证码</button>
+                </div>
+                <div class="form-floating mb-3 mt-3">
+                    <input type="text" class="form-control" id="sign_up_check_code" placeholder="请输入验证码"
+                        name="sign_up_check_code">
+                    <label for="sign_up_check_code">验证码</label>
+                </div>
+                <div class="form-floating mb-3 mt-3">
+                    <input type="password" class="form-control" id="sign_up_password" placeholder="请输入密码"
+                        name="sign_up_password">
+                    <label for="sign_up_password">密码</label>
+                </div>
+                <div class="form-floating mb-3 mt-3">
+                    <input type="password" class="form-control" id="sign_up_check_password" placeholder="请输入确认密码"
+                        name="sign_up_check_password">
+                    <label for="sign_up_check_password">确认密码</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" id="sign_up_button">注册</button>
+                <button type="button" class="btn btn-outline-dark" id="sign_up_cancel"
+                    data-bs-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
