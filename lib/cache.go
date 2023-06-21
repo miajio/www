@@ -7,7 +7,8 @@ import (
 )
 
 var (
-	Log   *zap.SugaredLogger
-	DBCfg bin.MysqlCfgParam
-	DB    *sqlx.DB
+	Log       *zap.SugaredLogger
+	DBCfg     bin.MysqlCfgParam
+	ServerCfg HttpServerParam
+	DB        *sqlx.DB
 )

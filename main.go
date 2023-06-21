@@ -83,11 +83,24 @@ func init() {
 		lib.DB = client
 	}
 
+	if err := v.UnmarshalKey("server", &lib.ServerCfg); err != nil {
+		lib.Log.Errorf("系统服务配置读取失败: %v", err)
+		os.Exit(0)
+	} else {
+		if lib.ServerCfg.Port[0] != ':' {
+			lib.ServerCfg.Port = ":" + lib.ServerCfg.Port
+		}
+
+		if strings.TrimSpace(lib.ServerCfg.HttpsKey) == "" || strings.TrimSpace(lib.ServerCfg.HttpsPem) == "" {
+			lib.ServerCfg.UseHttps = false
+		}
+	}
+
 	lib.Trans = lib.InitValidateTrans(binding.Validator.Engine().(*validator.Validate))
 }
 
 func main() {
-	e := gin.Default()
+	e := gin.New()
 
 	e.Static("/static/images", "./static/images")
 	// e.Static("/static/images/head", "./static/images/head")
@@ -121,6 +134,26 @@ func main() {
 		})
 	})
 
+	if lib.ServerCfg.UseHttps {
+		go func() {
+			e1 := gin.New()
+			e1.GET("/", func(ctx *gin.Context) {
+				ctx.Redirect(http.StatusMovedPermanently, lib.ServerCfg.HttpsHost)
+			})
+
+			e1.GET("/:page", func(ctx *gin.Context) {
+				ctx.Redirect(http.StatusMovedPermanently, lib.ServerCfg.HttpsHost)
+			})
+			e1.Use(bin.Limit(64))
+
+			if err := e1.Run(":80"); err != nil {
+				lib.Log.Errorf("init gin 80 port server fail: %v", err)
+			}
+		}()
+		e.Use(bin.Limit(64))
+		e.RunTLS(lib.ServerCfg.Port, lib.ServerCfg.HttpsPem, lib.ServerCfg.HttpsKey)
+		return
+	}
 	e.Use(bin.Limit(64))
-	e.Run(":81")
+	e.Run(lib.ServerCfg.Port)
 }
