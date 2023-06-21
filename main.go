@@ -27,8 +27,9 @@ type (
 var (
 	// GinRouters gin路由集
 	GinRouters bin.Routers = []bin.Router{
-		app.UserRouter, // 用户路由
-		app.MsgRouter,  // 消息路由
+		app.UserRouter,  // 用户路由
+		app.MsgRouter,   // 消息路由
+		app.EmailRouter, // 邮件路由
 	}
 
 	errorHandler = func(ctx *gin.Context) {
@@ -75,12 +76,28 @@ func init() {
 		lib.Log.Errorf("数据库配置读取失败: %v", err)
 		os.Exit(0)
 	} else {
-		client, err := bin.MysqlUtil.Connect(lib.DBCfg)
+		client, err := lib.MysqlUtil.Connect(lib.DBCfg)
 		if err != nil {
 			lib.Log.Errorf("数据库连接失败: %v", err)
 			os.Exit(0)
 		}
 		lib.DB = client
+	}
+
+	// Redis服务
+	if err := v.UnmarshalKey("redis", &lib.RedisCfg); err != nil {
+		lib.Log.Errorf("redis配置读取失败: %v", err)
+		os.Exit(0)
+	} else {
+		// 获取redis client
+		lib.RedisClient = lib.RedisCfg.NewClient()
+	}
+
+	// 邮箱服务
+	if err := v.UnmarshalKey("email", &lib.EmailCfg); err != nil {
+		lib.Log.Errorf("邮件配置读取失败: %v", err)
+	} else {
+		lib.EmailCfg.IsStatus = true
 	}
 
 	if err := v.UnmarshalKey("server", &lib.ServerCfg); err != nil {

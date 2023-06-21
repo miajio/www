@@ -1,14 +1,17 @@
 package lib
 
 import (
+	"github.com/go-redis/redis"
 	"github.com/jmoiron/sqlx"
-	"github.com/miajio/www/bin"
 	"go.uber.org/zap"
 )
 
 var (
-	Log       *zap.SugaredLogger
-	DBCfg     bin.MysqlCfgParam
-	ServerCfg HttpServerParam
-	DB        *sqlx.DB
+	Log         *zap.SugaredLogger
+	DBCfg       MysqlCfgParam
+	RedisCfg    = &RedisCfgParam{}
+	RedisClient *redis.Client
+	ServerCfg   HttpServerParam
+	EmailCfg    = &EmailCfgParam{}
+	DB          *sqlx.DB
 )

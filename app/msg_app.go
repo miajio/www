@@ -28,7 +28,7 @@ func (*msgRouterImpl) Running(e *gin.Engine) {
 		}
 
 		insertSQL := "INSERT INTO `leave_message` (`id`, `leave_mobile`, `leave_name`, `leave_msg`, `create_time`, `status`) VALUES (?, ?, ?, ?, NOW(), 1)"
-		_, err := lib.DB.Exec(insertSQL, bin.UID(), leave_mobile, leave_name, leave_msg)
+		_, err := lib.DB.Exec(insertSQL, lib.UID(), leave_mobile, leave_name, leave_msg)
 		if err != nil {
 			ctx.HTML(http.StatusOK, "error.html", gin.H{"code": 500, "msg": "系统错误", "err": err.Error()})
 			return
