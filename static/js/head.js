@@ -74,17 +74,41 @@ $(function () {
             return
         }
 
-        let outTime = 60
-        $("#send_email_button").attr("disabled", "true")
-        let interval = window.setInterval(function () {
-            $("#send_email_button").html(outTime + "秒后重新获取")
-            if (outTime <= 0) {
-                $("#send_email_button").removeAttr("disabled")
-                $("#send_email_button").html("重新获取")
-                window.clearInterval(interval)
+        let data = {
+            "email": email,
+            "emailType": "register"
+        }
+
+        $.ajax({
+            url: "/email/sendCheckCode",
+            type: "POST",
+            data: JSON.stringify(data),
+            dataType: "json",
+            cache: false,
+            processData: false,
+            async: false,
+            success: function (msg) {
+                if (msg.code == 200) {
+                    $("#sign_up_email_uid").html(msg.data)
+
+                    let outTime = 60
+                    $("#send_email_button").attr("disabled", "true")
+                    let interval = window.setInterval(function () {
+                        $("#send_email_button").html(outTime + "秒后重新获取")
+                        if (outTime <= 0) {
+                            $("#send_email_button").removeAttr("disabled")
+                            $("#send_email_button").html("重新获取")
+                            window.clearInterval(interval)
+                        }
+                        outTime--
+                    }, 1000)
+                } else {
+                    bootAlert($("#sign_up_error"), msg.error, "danger")
+                }
             }
-            outTime--
-        }, 1000)
+        })
+
+
     });
 });
 

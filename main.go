@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 	"strings"
@@ -91,6 +92,12 @@ func init() {
 	} else {
 		// 获取redis client
 		lib.RedisClient = lib.RedisCfg.NewClient()
+		val, err := lib.RedisClient.Ping().Result()
+		if err != nil {
+			lib.Log.Errorf("redis ping fail: %v", err)
+			os.Exit(0)
+		}
+		fmt.Println(val)
 	}
 
 	// 邮箱服务

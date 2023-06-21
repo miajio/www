@@ -3,25 +3,25 @@ name="miajio" # 发送者邮件名称
 mailAddr="miajio@163.com" # 发送者邮件地址
 smtpAddr="smtp.163.com:25"
 hostAddr="smtp.163.com"
-password="XXXXX" # 邮箱授权码
+password="WLIHRGAMDYFMETMK" # 邮箱授权码
 
 [mysql]
-host="127.0.0.1:3306" # 数据库地址
+host="1.116.251.2:3306" # 数据库地址
 user="root" # 数据库用户名
-password="123456" # 数据库密码
-database="miajio" # 数据库名
+password="C3p0&Mysql" # 数据库密码
+database="miajiodb" # 数据库名
 charset="utf8mb4" # 字符集
 parseTime="True" # 是否格式化时间
 loc="Local" # 时区
 
 [redis]
 host="127.0.0.1:6379" # redis 服务器地址
-password="" # redis 密码
+password="123456" # redis 密码
 db=0 # 默认连接库
 
 [server]
 port=":8080" # 服务端口
 useHttps=false # 是否使用https
-httpsKey=""
-httpsPem=""
-httpsHost=""
+httpsKey="./miajio.com_other/miajio.com.key"
+httpsPem="./miajio.com_other/miajio.com_bundle.pem"
+httpsHost="https://www.miajio.com"

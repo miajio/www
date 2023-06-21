@@ -27,7 +27,7 @@ var EmailLogic emailLogic = (*emailLogicImpl)(nil)
 // SendCheckCode 发送验证码
 func (e *emailLogicImpl) SendCheckCode(ctx *gin.Context) {
 	request := req.EmailSendCheckCodeRequest{}
-	if err := ctx.ShouldBind(&request); err != nil {
+	if err := ctx.ShouldBindJSON(&request); err != nil {
 		ctx.JSON(http.StatusOK, gin.H{"code": 400, "msg": "参数错误", "error": lib.TransError(err)})
 		return
 	}
