@@ -38,7 +38,6 @@ $(function () {
             cache: false,
             processData: false,
             contentType: false,
-            async: false,
             success: function (msg) {
                 if (msg.code == 200) {
                     let val = msg.data
@@ -58,11 +57,51 @@ $(function () {
 
     // 注册按钮
     $("#sign_up_button").click(function () {
+        let emailUid = $("#sign_up_email_uid").html()
         let username = $("#sign_up_user_name").val()
         let email = $("#sign_up_email").val()
         let checkCode = $("#sign_up_check_code").val()
         let password = $("#sign_up_password").val()
         let checkPassword = $("#sign_up_check_password").val()
+
+        if (password != checkPassword) {
+            bootAlert($("#sign_up_error"), "校验密码错误,请确认两次密码是否一致", "danger")
+            return
+        }
+
+        let data = {
+            "uid": emailUid,
+            "username": username,
+            "email": email,
+            "checkCode": checkCode,
+            "password": password
+        }
+        
+        $.ajax({
+            url:"/user/register",
+            type: "POST",
+            data: JSON.stringify(data),
+            dataType: "json",
+            cache: false,
+            processData: false,
+            success: function (msg) {
+                if (msg.code == 200) {
+                    let val = msg.data
+                    $.cookie("user_msg", JSON.stringify(val), { expires: 7 })
+                    $("#login_user_name").html(val.username)
+                    $("#sign_out_username").val(val.username)
+
+                    bootstrap.Modal.getInstance($("#SignUp")).hide()
+                    $("#menu_button_group").hide()
+                    $("#login_user_group").show()
+
+                    bootAlert($("#head_alert_div"), msg.msg, "success")
+                } else {
+                    bootAlert($("#sign_up_error"), msg.error, "danger")
+                }
+            }
+        })
+
 
     });
 
@@ -86,7 +125,6 @@ $(function () {
             dataType: "json",
             cache: false,
             processData: false,
-            async: false,
             success: function (msg) {
                 if (msg.code == 200) {
                     $("#sign_up_email_uid").html(msg.data)

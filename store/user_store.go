@@ -26,7 +26,7 @@ func (*userInfoStoreImpl) Login(email, password string) (model.UserInfoModel, er
 	if err != nil && err == sql.ErrNoRows {
 		err = errors.New("用户名或密码错误")
 	}
-
+	result.Password = ""
 	return result, err
 }
 
@@ -43,12 +43,13 @@ func (*userInfoStoreImpl) Register(username, email, password string) (*model.Use
 	uid := lib.UID()
 
 	insertSql := "INSERT INTO `user_info` (`uid`, `username`, `email`, `password`, `status`, `create_time`, `update_time`) VALUES (?, ?, ?, MD5(?), 1, NOW(), NOW())"
-	_, err := lib.DB.Exec(insertSql, uid, username, "nil", email, password)
+	_, err := lib.DB.Exec(insertSql, uid, username, email, password)
 	if err != nil {
 		return nil, err
 	}
 
 	var result model.UserInfoModel
 	err = lib.DB.Get(&result, "SELECT * FROM `user_info` WHERE `uid` = ?", uid)
+	result.Password = ""
 	return &result, err
 }
