@@ -49,6 +49,13 @@ nohup ./main-linux &
 
 ## config.toml
 ```
+[email]
+name="miajio" # 发送者邮件名称
+mailAddr="miajio@163.com" # 发送者邮件地址
+smtpAddr="smtp.163.com:25"
+hostAddr="smtp.163.com"
+password="XXXXX" # 邮箱授权码
+
 [mysql]
 host="127.0.0.1:3306" # 数据库地址
 user="root" # 数据库用户名
@@ -58,10 +65,15 @@ charset="utf8mb4" # 字符集
 parseTime="True" # 是否格式化时间
 loc="Local" # 时区
 
+[redis]
+host="127.0.0.1:6379" # redis 服务器地址
+password="" # redis 密码
+db=0 # 默认连接库
+
 [server]
 port=":8080" # 服务端口
-useHttps=false # 是否使用https 如果不实用 则下列三个参数均可为空字符串
-httpsKey="" 
+useHttps=false # 是否使用https
+httpsKey=""
 httpsPem=""
 httpsHost=""
 
