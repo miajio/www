@@ -2,6 +2,7 @@ package logic
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/miajio/www/lib"
@@ -14,6 +15,7 @@ type userLogicImpl struct{}
 type userLogic interface {
 	Login(*gin.Context)    // Login 登录
 	Register(*gin.Context) // Register 注册
+	Auth(*gin.Context)     // Auth Token鉴权
 }
 
 // UserLogic 用户业务逻辑
@@ -32,7 +34,12 @@ func (*userLogicImpl) Login(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{"code": 400, "msg": "用户名或密码错误", "error": err.Error()})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"code": 200, "msg": "登录成功", "data": result})
+	msg, err := lib.Jwt.GenerateToken([]byte(lib.ServerCfg.JwtKey), result, 24*time.Hour)
+	if err != nil {
+		ctx.JSON(http.StatusOK, gin.H{"code": 500, "msg": "jwt生成异常", "error": err.Error()})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"code": 200, "msg": "登录成功", "data": msg})
 }
 
 // Register 注册
@@ -63,5 +70,21 @@ func (*userLogicImpl) Register(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{"code": 500, "msg": "注册失败", "error": err.Error()})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"code": 200, "msg": "注册成功", "data": result})
+	msg, err := lib.Jwt.GenerateToken([]byte(lib.ServerCfg.JwtKey), result, 24*time.Hour)
+	if err != nil {
+		ctx.JSON(http.StatusOK, gin.H{"code": 500, "msg": "jwt生成异常", "error": err.Error()})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"code": 200, "msg": "注册成功", "data": msg})
+}
+
+// Auth Token 鉴权
+func (*userLogicImpl) Auth(ctx *gin.Context) {
+	tk := ctx.Request.Header.Get("Authorization")
+	msg, err := lib.Jwt.ParseToken([]byte(lib.ServerCfg.JwtKey), tk)
+	if err != nil {
+		ctx.JSON(http.StatusOK, gin.H{"code": 400, "msg": "jwt鉴权失败,请重新登录", "error": err.Error()})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"code": 200, "msg": "鉴权成功", "data": msg})
 }

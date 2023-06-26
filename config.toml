@@ -20,6 +20,7 @@ password="" # redis 密码
 db=0 # 默认连接库
 
 [server]
+jwtKey="testok jwt"
 port=":8080" # 服务端口
 useHttps=false # 是否使用https
 httpsKey="./miajio.com_other/miajio.com.key"

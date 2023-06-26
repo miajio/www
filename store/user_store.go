@@ -11,9 +11,9 @@ import (
 type userInfoStoreImpl struct{}
 
 type userInfoStore interface {
-	Login(email, password string) (model.UserInfoModel, error)               // Login 登录操作
-	EmailRepeat(email string) (bool, error)                                  // EmailRepeat 判断邮箱是否存在
-	Register(username, email, password string) (*model.UserInfoModel, error) // Register 注册操作
+	Login(email, password string) (model.UserInfoModel, error)              // Login 登录操作
+	EmailRepeat(email string) (bool, error)                                 // EmailRepeat 判断邮箱是否存在
+	Register(username, email, password string) (model.UserInfoModel, error) // Register 注册操作
 }
 
 var UserInfoStore userInfoStore = (*userInfoStoreImpl)(nil)
@@ -39,17 +39,17 @@ func (*userInfoStoreImpl) EmailRepeat(email string) (bool, error) {
 }
 
 // Register 注册操作
-func (*userInfoStoreImpl) Register(username, email, password string) (*model.UserInfoModel, error) {
+func (*userInfoStoreImpl) Register(username, email, password string) (model.UserInfoModel, error) {
+	result := model.UserInfoModel{}
 	uid := lib.UID()
 
 	insertSql := "INSERT INTO `user_info` (`uid`, `username`, `email`, `password`, `status`, `create_time`, `update_time`) VALUES (?, ?, ?, MD5(?), 1, NOW(), NOW())"
 	_, err := lib.DB.Exec(insertSql, uid, username, email, password)
 	if err != nil {
-		return nil, err
+		return result, err
 	}
 
-	var result model.UserInfoModel
 	err = lib.DB.Get(&result, "SELECT * FROM `user_info` WHERE `uid` = ?", uid)
 	result.Password = ""
-	return &result, err
+	return result, err
 }

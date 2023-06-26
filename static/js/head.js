@@ -40,14 +40,29 @@ $(function () {
             contentType: false,
             success: function (msg) {
                 if (msg.code == 200) {
-                    let val = msg.data
-                    $.cookie("user_msg", JSON.stringify(val), { expires: 7 })
-                    $("#login_user_name").html(val.username)
-                    $("#sign_out_username").val(val.username)
+                    let tk = msg.data
+                    $.ajax({
+                        url: "/user/auth",
+                        type: "GET",
+                        headers: {
+                            "Authorization": tk
+                        },
+                        success: function (v) {
+                            if (v.code == 200) {
+                                let val = v.data
+                                $.cookie("miajio_token", tk, { expires: 7 })
+                                $("#login_user_name").html(val.username)
+                                $("#sign_out_username").val(val.username)
 
-                    bootstrap.Modal.getInstance($("#SignIn")).hide()
-                    $("#menu_button_group").hide()
-                    $("#login_user_group").show()
+                                bootstrap.Modal.getInstance($("#SignIn")).hide()
+                                $("#menu_button_group").hide()
+                                $("#login_user_group").show()
+                                bootAlert($("#head_alert_div"), msg.msg, "success")
+                            } else {
+                                bootAlert($("#sign_in_error"), msg.error, "danger")
+                            }
+                        }
+                    })
                 } else {
                     bootAlert($("#sign_in_error"), msg.error, "danger")
                 }
@@ -76,9 +91,9 @@ $(function () {
             "checkCode": checkCode,
             "password": password
         }
-        
+
         $.ajax({
-            url:"/user/register",
+            url: "/user/register",
             type: "POST",
             data: JSON.stringify(data),
             dataType: "json",
@@ -86,16 +101,30 @@ $(function () {
             processData: false,
             success: function (msg) {
                 if (msg.code == 200) {
-                    let val = msg.data
-                    $.cookie("user_msg", JSON.stringify(val), { expires: 7 })
-                    $("#login_user_name").html(val.username)
-                    $("#sign_out_username").val(val.username)
+                    let tk = msg.data
 
-                    bootstrap.Modal.getInstance($("#SignUp")).hide()
-                    $("#menu_button_group").hide()
-                    $("#login_user_group").show()
+                    $.ajax({
+                        url: "/user/auth",
+                        type: "GET",
+                        headers: {
+                            "Authorization": tk
+                        },
+                        success: function (v) {
+                            if (v.code == 200) {
+                                let val = v.data
+                                $.cookie("miajio_token", tk, { expires: 7 })
+                                $("#login_user_name").html(val.username)
+                                $("#sign_out_username").val(val.username)
 
-                    bootAlert($("#head_alert_div"), msg.msg, "success")
+                                bootstrap.Modal.getInstance($("#SignUp")).hide()
+                                $("#menu_button_group").hide()
+                                $("#login_user_group").show()
+                                bootAlert($("#head_alert_div"), msg.msg, "success")
+                            } else {
+                                bootAlert($("#sign_up_error"), msg.error, "danger")
+                            }
+                        }
+                    })
                 } else {
                     bootAlert($("#sign_up_error"), msg.error, "danger")
                 }
@@ -152,14 +181,24 @@ $(function () {
 
 // 界面开始时加载操作
 function start() {
-    let user_msg = $.cookie("user_msg")
-    if (null != user_msg && undefined != user_msg && "" != user_msg) {
-        let user = JSON.parse(user_msg)
-        $("#login_user_name").html(user.username)
-        $("#menu_button_group").hide()
-        $("#login_user_group").show()
-
-        $("#sign_out_username").val(user.username)
+    let tk = $.cookie("miajio_token")
+    if (null != tk && undefined != tk && "" != tk) {
+        $.ajax({
+            url: "/user/auth",
+            type: "GET",
+            headers: {
+                "Authorization": tk
+            },
+            success: function (v) {
+                if (v.code == 200) {
+                    let user = v.data
+                    $("#login_user_name").html(user.username)
+                    $("#menu_button_group").hide()
+                    $("#login_user_group").show()
+                    $("#sign_out_username").val(user.username)
+                }
+            }
+        })
     }
 }
 

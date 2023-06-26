@@ -17,5 +17,5 @@ func (*userRouterImpl) Running(e *gin.Engine) {
 	userGroup := e.Group("/user")
 	userGroup.POST("/login", logic.UserLogic.Login)
 	userGroup.POST("/register", logic.UserLogic.Register)
-
+	userGroup.GET("/auth", logic.UserLogic.Auth)
 }
