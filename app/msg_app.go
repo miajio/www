@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/miajio/www/bin"
 	"github.com/miajio/www/lib"
+	"github.com/miajio/www/req"
 )
 
 type msgRouterImpl struct{}
@@ -18,19 +19,16 @@ func (*msgRouterImpl) Running(e *gin.Engine) {
 	msgGroup := e.Group("/msg")
 
 	msgGroup.POST("/leave", func(ctx *gin.Context) {
-		leave_mobile := ctx.DefaultPostForm("mobile", "")
-		leave_name := ctx.DefaultPostForm("name", "")
-		leave_msg := ctx.DefaultPostForm("msg", "")
-
-		if leave_mobile == "" || leave_name == "" || leave_msg == "" {
-			ctx.HTML(http.StatusOK, "error.html", gin.H{"code": 403, "msg": "参数错误", "err": "参数错误"})
+		request := req.MsgLeaveRequest{}
+		if err := ctx.ShouldBind(&request); err != nil {
+			ctx.HTML(http.StatusOK, "error.html", gin.H{"code": 403, "msg": "参数错误", "error": lib.TransError(err)})
 			return
 		}
 
 		insertSQL := "INSERT INTO `leave_message` (`id`, `leave_mobile`, `leave_name`, `leave_msg`, `create_time`, `status`) VALUES (?, ?, ?, ?, NOW(), 1)"
-		_, err := lib.DB.Exec(insertSQL, lib.UID(), leave_mobile, leave_name, leave_msg)
+		_, err := lib.DB.Exec(insertSQL, lib.UID(), request.Mobile, request.Name, request.Msg)
 		if err != nil {
-			ctx.HTML(http.StatusOK, "error.html", gin.H{"code": 500, "msg": "系统错误", "err": err.Error()})
+			ctx.HTML(http.StatusOK, "error.html", gin.H{"code": 500, "msg": "系统错误", "error": err.Error()})
 			return
 		}
 

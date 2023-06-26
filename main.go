@@ -28,9 +28,10 @@ type (
 var (
 	// GinRouters gin路由集
 	GinRouters bin.Routers = []bin.Router{
-		app.UserRouter,  // 用户路由
-		app.MsgRouter,   // 消息路由
-		app.EmailRouter, // 邮件路由
+		app.UserRouter,    // 用户路由
+		app.MsgRouter,     // 消息路由
+		app.EmailRouter,   // 邮件路由
+		app.ArticleRouter, // 文章路由
 	}
 
 	errorHandler = func(ctx *gin.Context) {

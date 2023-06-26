@@ -23,7 +23,7 @@
                     data-bs-target="#SignUp">注册</button>
             </div>
             <div id="login_user_group" style="display: none;">
-                <img style="width:50px;height:50px;" class="img-circle thumbnail" src="/static/images/miajio_photo.jpg"
+                <img style="width:50px;height:50px;" class="img-circle thumbnail" id="login_user_head" src="/static/images/miajio_photo.jpg"
                     alt="miajio" />
                 <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#SignOut"
                     id="login_user_name">user_name</button>
@@ -41,11 +41,18 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <div class="form-floating mb-3 mt-3">
+                <div class="mb-3 mt-3">
+                    <label for="sign_out_head_pic" class="form-label">头像:</label>
+                    <img style="width:50px;height:50px;" class="img-circle thumbnail" id="sign_out_user_head" src="/static/images/miajio_photo.jpg"
+                    alt="miajio" />
+                    <input type="file" hidden accept="image/gif,image/jpeg,image/png" id="sign_out_head_pic" placeholder="头像" name="sign_out_head_pic" />
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="sign_out_username" class="form-label">用户名:</label>
                     <input type="text" class="form-control" id="sign_out_username" placeholder="请输入用户名"
                         name="sign_out_username">
-                    <label for="sign_out_username">用户名</label>
                 </div>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-info" id="sign_out_save_button">保存</button>

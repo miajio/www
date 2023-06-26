@@ -18,4 +18,5 @@ func (*userRouterImpl) Running(e *gin.Engine) {
 	userGroup.POST("/login", logic.UserLogic.Login)
 	userGroup.POST("/register", logic.UserLogic.Register)
 	userGroup.GET("/auth", logic.UserLogic.Auth)
+	userGroup.POST("/update", logic.UserLogic.Update)
 }

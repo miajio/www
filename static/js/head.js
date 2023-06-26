@@ -4,12 +4,59 @@ $(function () {
 
     // 退出登录按钮
     $("#sign_out_button").click(function () {
-        $.removeCookie("user_msg")
+        $.removeCookie("miajio_token")
         window.location.href = "/index.html"
     });
 
     $("#sign_out_save_button").click(function () {
+        let tk = $.cookie("miajio_token")
+        if (null == tk || undefined == tk || "" == tk) {
+            bootAlert($("#head_alert_div"), "登录信息无法获取,请重新登录", "danger")
+        }
+
+        let headPic = $("#sign_out_head_pic")[0].files[0]
         let username = $("#sign_out_username").val()
+
+        let data = new FormData()
+        data.append("headPic", headPic)
+        data.append("username", username)
+
+        $.ajax({
+            url: "/user/update",
+            type: "POST",
+            headers: {
+                "Authorization": tk
+            },
+            data: data,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function(msg) {
+                if (msg.code == 200) {
+                    $.cookie("miajio_token", msg.data, { expires: 7 })
+                    window.location.href = "/index.html"
+                } else {
+                    bootAlert($("#head_alert_div"), msg.error, "danger")
+                }
+            }
+        })
+    });
+
+    $("#sign_out_user_head").click(function () {
+        $("#sign_out_head_pic").click()
+        $(document).on("change", "#sign_out_head_pic", function () {
+
+            let inputObj = $("#sign_out_head_pic")[0]
+
+            var reader = new FileReader()
+            reader.onload = function(e) {
+                if (reader.readyState === 2) {
+                    $("#sign_out_user_head").attr("src", e.target.result)
+                }
+            }
+            reader.readAsDataURL(inputObj.files[0])
+        })
+
     });
 
     // 登录按钮
@@ -53,6 +100,8 @@ $(function () {
                                 $.cookie("miajio_token", tk, { expires: 7 })
                                 $("#login_user_name").html(val.username)
                                 $("#sign_out_username").val(val.username)
+                                $("#login_user_head").attr("src", val.headPic)
+                                $("#sign_out_user_head").attr("src", val.headPic)
 
                                 bootstrap.Modal.getInstance($("#SignIn")).hide()
                                 $("#menu_button_group").hide()
@@ -115,6 +164,8 @@ $(function () {
                                 $.cookie("miajio_token", tk, { expires: 7 })
                                 $("#login_user_name").html(val.username)
                                 $("#sign_out_username").val(val.username)
+                                $("#login_user_head").attr("src", val.headPic)
+                                $("#sign_out_user_head").attr("src", val.headPic)
 
                                 bootstrap.Modal.getInstance($("#SignUp")).hide()
                                 $("#menu_button_group").hide()
@@ -193,6 +244,9 @@ function start() {
                 if (v.code == 200) {
                     let user = v.data
                     $("#login_user_name").html(user.username)
+                    $("#login_user_head").attr("src", user.headPic)
+                    $("#sign_out_user_head").attr("src", user.headPic)
+
                     $("#menu_button_group").hide()
                     $("#login_user_group").show()
                     $("#sign_out_username").val(user.username)

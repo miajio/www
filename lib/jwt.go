@@ -11,6 +11,7 @@ import (
 type JwtUserInfoClaims struct {
 	Uid      string `json:"uid"`
 	Username string `json:"username"`
+	HeadPic  string `json:"headPic"`
 	Email    string `json:"email"`
 	Status   int    `json:"status"`
 	jwt.RegisteredClaims
@@ -37,6 +38,7 @@ func (*jwtImpl) GenerateToken(key []byte, userInfo model.UserInfoModel, timeOut 
 		Username: userInfo.Username,
 		Email:    userInfo.Email,
 		Status:   userInfo.Status,
+		HeadPic:  userInfo.HeadPic,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(timeOut)),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
